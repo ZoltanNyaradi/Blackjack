@@ -14,10 +14,34 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("black_jack")
 
-print("Welcome!")
-chips = SHEET.worksheet("chips")
+def main():
+    """
+    Main menu
 
-data = chips.get_all_values()
+    Asks a command and navigates to the chosen site.
+    """
+    print("Blackjack main menu\n")
 
-print(data)
-input()
+    print('For leaderboard enter "l"')
+    print('To close the application enter:"q"')
+    print("To login just enter anything else")
+
+    command=input()
+    print()
+
+    if(command=="l"):
+        leaderboard()
+    elif(command=="q"):
+        print("Blackjack is closed!")
+    else:
+        login()
+
+def leaderboard():
+    print("leaderboard")
+
+def login():
+    print("login")
+
+print()
+print("Welcome!\n")
+main()
