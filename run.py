@@ -78,13 +78,58 @@ def leaderboard():
 
     print("==================================")
 
-    input("quit(Enter)")
+    input("Quit(Enter)")
     print()
     main()
     # As the enter is pressed, it goes back to the main menu
 
 def login():
-    print("login")
+    '''
+    Login or register
+
+    Asks the player for a player name.
+    If it doesn't exist he can create it.
+    It is possible to go back to the main menu.
+    '''
+    print("Enter you name!\nQuit(q)")
+    player = input()
+    print()
+    # Ask the player name
+
+    chips = SHEET.worksheet("chips").get_all_values()
+    # Load the players
+
+    if(player=="q"):
+        main()
+        # Go back to main if it was "q" instead of a name
+    elif(player in chips[0]):
+        game(player)
+        # Enter the game whit the given name
+    else:
+        print("This player doesn't exist! Do you want to register?")
+        # If this player doesn't exist, give the opportunity to create it
+        while(True):
+            register = input("Yes(y), No(n): ")
+            # Players decison
+            print()
+            if(register == "y"):
+                create_player(player)
+                # If it is "y" create a player
+                break
+            elif(register == "n"):
+                login()
+                # If it is "n" go back to login
+                break
+            else:
+                print("Incorrect input!")
+                # If the aswer is incorrect don't break the loop
+                # and repeat the question
+
+def create_player(player):
+    print("create player...")
+
+def game(player):
+    print("This is the game")
 
 print()
 print("Welcome!\n")
