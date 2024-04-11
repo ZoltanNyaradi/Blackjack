@@ -126,7 +126,19 @@ def login():
                 # and repeat the question
 
 def create_player(player):
-    print("create player...")
+    """
+    Create player and start game
+    """
+    chips_worksheet = SHEET.worksheet("chips")
+    # Get the chips worksheet
+    new_player_index = len(chips_worksheet.row_values(1))+1
+    # Get the last player index and add one
+    chips_worksheet.update_cell(1,new_player_index,player)
+    # Add the new player to the sheet
+    chips_worksheet.update_cell(2,new_player_index,1000)
+    # Add him 1000 chips
+    game(player)
+    # Start the game
 
 def game(player):
     print("This is the game")
