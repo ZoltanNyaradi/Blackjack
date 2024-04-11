@@ -1,3 +1,12 @@
+print("""
+    ■   ■■■ ■■■ ■  ■   ■ ■■■ ■■■ ■  ■
+    ■   ■ ■ ■   ■ ■    ■ ■ ■ ■   ■ ■
+    ■■■ ■■■ ■   ■■     ■ ■■■ ■   ■■
+    ■ ■ ■ ■ ■   ■ ■  ■ ■ ■ ■ ■   ■ ■
+    ■■■ ■ ■ ■■■ ■  ■ ■■■ ■ ■ ■■■ ■  ■
+
+
+        """)
 print("Loading...")
 
 import gspread
@@ -21,7 +30,7 @@ def main():
     Asks a command and navigates to the chosen site.
     """
     print("Blackjack main menu\n")
-
+    
     print('For leaderboard enter: "l"')
     print('To close the application enter: "q"')
     print("To login just enter anything else")
@@ -141,8 +150,9 @@ def create_player(player):
     # Start the game
 
 def game(player):
-    print("This is the game")
+    chips_worksheet = SHEET.worksheet("chips")
 
 print()
 print("Welcome!\n")
-main()
+#main()
+game("Zoltan")
