@@ -150,7 +150,36 @@ def create_player(player):
     # Start the game
 
 def game(player):
+    
     chips_worksheet = SHEET.worksheet("chips")
+    # Get the chips worksheet
+    player_index = chips_worksheet.row_values(1).index(player)+1
+    # Get player index
+    num_of_chips = chips_worksheet.cell(2,player_index).value
+    # Get player chips
+    
+    ## while(True):
+
+    # shuffle()
+
+    # while(True):
+
+    # bet()
+
+    # deal()
+        # display cards()#
+
+    # while()
+
+    # play()
+        # display cards()
+
+    # dealer_play()
+        # display cards()
+    # end_of_the_turn()
+
+    # deck_check()
+
 
 print()
 print("Welcome!\n")
