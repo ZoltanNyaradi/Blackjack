@@ -1,3 +1,7 @@
+import gspread
+import random
+from google.oauth2.service_account import Credentials
+
 print("""
     ■   ■■■ ■■■ ■  ■   ■ ■■■ ■■■ ■  ■
     ■   ■ ■ ■   ■ ■    ■ ■ ■ ■   ■ ■
@@ -8,9 +12,6 @@ print("""
 
         """)
 print("Loading...")
-
-import gspread
-from google.oauth2.service_account import Credentials
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -90,7 +91,7 @@ def leaderboard():
     input("Quit(Enter)")
     print()
     main()
-    # As the enter is pressed, it goes back to the main menu
+    # As the enter is pressed, go back to the main menu
 
 def login():
     '''
@@ -160,7 +161,8 @@ def game(player):
     
     ## while(True):
 
-    # shuffle()
+    deck = shuffle()
+    # Create a shuffled deck
 
     # while(True):
 
@@ -179,6 +181,24 @@ def game(player):
     # end_of_the_turn()
 
     # deck_check()
+
+def shuffle():
+    """
+    Give back 4 shuffled deck
+    """
+    card_types = ["♠","♥","♦","♣"]
+    card_numbers = [str(card_number) for card_number in range(2,11)]+["J","Q","K","A"]
+    # A list of card numbers
+    deck_in_order =  [card_types[card_type]+card_numbers[card_number] for card_type in range(4) for card_number in range(13) for deck_number in range(4)]
+    # Create four decks in order 
+    shuffle_methode = [random.randint(0, deck_size) for deck_size in reversed(range(208))]
+    # Create a list of random number in a decreasing range
+    
+    shuffled_deck = []
+    for i in range(208):
+        shuffled_deck.append(deck_in_order.pop(shuffle_methode[i]))
+        # Take a random card from the ordered to the unorderd deck
+    return shuffled_deck
 
 
 print()
