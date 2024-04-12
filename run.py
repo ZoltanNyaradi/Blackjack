@@ -165,8 +165,9 @@ def game(player):
     # Create a shuffled deck
 
     # while(True):
-
-    # bet()
+    player_bet = bet()
+    if (player_bet == "q"):
+        return    
 
     # deal()
         # display cards()#
@@ -200,6 +201,15 @@ def shuffle():
         # Take a random card from the ordered to the unorderd deck
     return shuffled_deck
 
+def bet():
+    while(True):
+            bet = input("Take your bet!\nBet(Any number), Quit(q)")
+            if(bet == "q"):
+                return "q"
+            elif(type(bet)==int):
+                return bet
+            else:
+                print("Wrong value!")
 
 print()
 print("Welcome!\n")
