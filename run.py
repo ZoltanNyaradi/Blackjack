@@ -172,12 +172,8 @@ def game(player):
     player_cards.append(deck.pop())
     dealer_cards.append(deck.pop())
     player_cards.append(deck.pop())
-    dealer_cards.append(deck.pop())
 
-    print(player_cards)
-    print(dealer_cards)
-    # deal()
-        # display cards()#
+    display_cards(player_cards, dealer_cards)
 
     # while()
 
@@ -236,6 +232,22 @@ def bet(num_of_chips):
                 except():
                     print("Wrong value!\n")
                         # If it is not a number
+
+def display_cards(player_cards, dealer_cards):
+    """
+    Display the cards for the player
+    """
+    print("Dealer's hand")
+    for i in range(len(dealer_cards)):
+        print(f"[{dealer_cards[i]}]",end="")
+        # Display the dealers cards
+    print("\n\nYour hand")
+    for i in range(len(player_cards)):
+        print(f"[{player_cards[i]}]",end="")
+        # Display the player cards
+    print("")
+
+
 
 print()
 print("Welcome!\n")
