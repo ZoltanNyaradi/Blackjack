@@ -30,20 +30,19 @@ def main():
 
     Asks a command and navigates to the chosen site.
     """
-    print("Blackjack main menu\n")
-    
-    print('For leaderboard enter: "l"')
-    print('To close the application enter: "q"')
-    print("To login just enter anything else")
+    while(True):
+        print("Blackjack main menu\n")
+        print("Leaderboard(l), Quit(q), Login(Enter)")
 
-    command=input()
-    print()
+        command=input()
+        print()
 
-    if(command=="l"):
-        leaderboard()
-    elif(command=="q"):
-        print("Blackjack is closed!")
-    else:
+        if(command=="l"):
+            leaderboard()
+        elif(command=="q"):
+            print("Blackjack is closed!")
+            return
+        else:
         login()
 
 def leaderboard():
@@ -90,7 +89,6 @@ def leaderboard():
 
     input("Quit(Enter)")
     print()
-    main()
     # As the enter is pressed, go back to the main menu
 
 def login():
@@ -110,7 +108,7 @@ def login():
     # Load the players
 
     if(player=="q"):
-        main()
+        return
         # Go back to main if it was "q" instead of a name
     elif(player in chips[0]):
         game(player)
