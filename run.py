@@ -43,7 +43,7 @@ def main():
             print("Blackjack is closed!")
             return
         else:
-        login()
+            login()
 
 def leaderboard():
     """
@@ -154,7 +154,7 @@ def game(player):
     # Get the chips worksheet
     player_index = chips_worksheet.row_values(1).index(player)+1
     # Get player index
-    num_of_chips = chips_worksheet.cell(2,player_index).value
+    num_of_chips = int(chips_worksheet.cell(2,player_index).value)
     # Get player chips
     
     ## while(True):
@@ -163,10 +163,19 @@ def game(player):
     # Create a shuffled deck
 
     # while(True):
-    player_bet = bet()
+    player_bet = bet(num_of_chips)
     if (player_bet == "q"):
-        return    
+        return 
 
+    player_cards = []
+    dealer_cards = []
+    player_cards.append(deck.pop())
+    dealer_cards.append(deck.pop())
+    player_cards.append(deck.pop())
+    dealer_cards.append(deck.pop())
+
+    print(player_cards)
+    print(dealer_cards)
     # deal()
         # display cards()#
 
@@ -199,15 +208,34 @@ def shuffle():
         # Take a random card from the ordered to the unorderd deck
     return shuffled_deck
 
-def bet():
+def bet(num_of_chips):
+    """
+    Ask and wait for bet.
+    """
     while(True):
-            bet = input("Take your bet!\nBet(Any number), Quit(q)")
+            bet = input("Take your bet!\nBet(Any number), Quit(q)\n")
+            # Input
             if(bet == "q"):
                 return "q"
-            elif(type(bet)==int):
-                return bet
+                # Return q so the game def can also return
             else:
-                print("Wrong value!")
+                try:
+                    bet_int = int(bet)
+                    # Try to turn into an int the input
+                    if(num_of_chips<bet_int):
+                        print("You don't have inaf chips!\n")
+                        # If not inaf chips
+                    
+                    elif(0>=bet_int):
+                        print("Bet must be bigger than 0\n")
+                        # In case of negative number or 0
+                    else:
+                        print()
+                        return bet_int
+                        # In case of a valid number return the bet
+                except():
+                    print("Wrong value!\n")
+                        # If it is not a number
 
 print()
 print("Welcome!\n")
