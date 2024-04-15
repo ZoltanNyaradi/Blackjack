@@ -186,7 +186,7 @@ def game(player):
     player_move_result = player_move(player_cards, dealer_cards, deck)
     if (player_move_result[0]=="q" or player_move_result[0]=="busted"):
         print("Busted")
-        lose(player_bet)
+        lose(player_bet, player_index)
         # Player lose his bet
         return
         # Go back to main menu
@@ -204,7 +204,7 @@ def game(player):
     deck = dealer_move_result[1]
     # Update deck
 
-    end_of_turn(player_hand_value, dealer_hand_value, player_bet)
+    end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index)
     ## deck_check()
 
 def shuffle():
@@ -395,29 +395,48 @@ def dealer_play(player_cards, dealer_cards, deck):
             # If the dealer has more than 16 return this value and the updated deck
             # If the dealer has less or equal 16 the dealer pull an other card the loop contineu
 
-def end_of_turn(player_hand_value, dealer_hand_value, player_bet):
-    print(player_hand_value)
-    print(dealer_hand_value)
+def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
+    """
+    Commpears 
+    """
+    print(f"player_bet{player_bet}")
+    print(f"player_index{player_index}")
     if (player_hand_value=="blackjack"):
         if (dealer_hand_value=="blackjack"):
             print("Tie!")
         else:
             print("You won!")
-            won(player_bet*1,5)
+            won(player_bet*1.5, player_index)
     elif (dealer_hand_value=="blackjack"):
         print("You lost!")
-        lost(player_bet)
+        lost(player_bet, player_index)
     elif (dealer_hand_value=="busted"):
         print("You won!")
-        won(player_bet)
+        won(player_bet, player_index)
     elif (player_hand_value>dealer_hand_value):
         print("You won!")
-        won(player_bet)
+        won(player_bet, player_index)
     elif (player_hand_value==dealer_hand_value): 
         print("Tie!")
     elif (player_hand_value<dealer_hand_value): 
         print("You lost!")
-        lost(player_bet)
+        lost(player_bet, player_index)
+
+def won(player_bet, player_index):
+    chips_worksheet = SHEET.worksheet("chips")
+    # Get the chips worksheet
+    num_of_chips = int(chips_worksheet.cell(2, player_index).value)
+    num_of_chips += player_bet
+    chips_worksheet.update_cell(2, player_index, num_of_chips)
+
+def lost(player_bet, player_index):
+    chips_worksheet = SHEET.worksheet("chips")
+    # Get the chips worksheet
+    num_of_chips = int(chips_worksheet.cell(2, player_index).value)
+    num_of_chips -= player_bet
+    chips_worksheet.update_cell(2, player_index, num_of_chips)
+
+
 print()
 print("Welcome!\n")
 #main()
