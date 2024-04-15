@@ -1,5 +1,6 @@
 import gspread
 import random
+import time
 from google.oauth2.service_account import Credentials
 
 print("""
@@ -192,17 +193,17 @@ def game(player):
     player_hand_value = player_move_result[0]
     # Assign players hands value in a variable
     deck = player_move_result[1]
-    # Updare deck
+    # Update deck
 
+    dealer_move_result = dealer_play(player_cards, dealer_cards, deck)
+    # Dealers turn 
+    dealer_hand_value = dealer_move_result[0]
+    # Assign dealers hands value in a variable
+    deck = dealer_move_result[1]
+    # Update deck
 
-    # play()
-        # display cards()
-
-    # dealer_play()
-        # display cards()
-    # end_of_the_turn()
-
-    # deck_check()
+    
+    ## deck_check()
 
 def shuffle():
     """
@@ -263,7 +264,7 @@ def display_cards(player_cards, dealer_cards):
     for i in range(len(player_cards)):
         print(f"[{player_cards[i]}]",end="")
         # Display the player cards
-    print("")
+    print("\n")
 
 def player_move(player_cards, dealer_cards, deck):
     """
@@ -361,6 +362,35 @@ def hand_value(hand):
         # 100-89=11
     return sum_of_hand
         # Return the value of the hand
+
+def dealer_play(player_cards, dealer_cards, deck):
+    """
+    Display dealers turn
+    """
+    dealer_card_values = [card_value(dealer_cards[0][1])]
+    # Add player cards value to a list
+    while(True):
+        time. sleep(2)
+        # wait 2 second
+        dealer_cards.append(deck.pop())
+        # Move a card from deck to dealers hand
+        dealer_card_values.append(card_value(dealer_cards[-1][1]))
+        # Add the new cards value to the list
+        display_cards(player_cards, dealer_cards)
+        # Display the current cards
+        value_of_dealer_hand = hand_value(dealer_card_values)
+        # Calculate the value of dealers hand
+
+        if (value_of_dealer_hand>21):
+            return "busted", deck
+            # If the dealer has more than 21 return "busted", and the updated deck
+        elif (value_of_dealer_hand==21 and len(dealer_cards==2)):
+            return "blackjack", deck
+            # If the dealer has 21 from two cards return 21 and the updated deck 
+        elif (value_of_dealer_hand>16):
+            return value_of_dealer_hand, deck
+            # If the dealer has more than 16 return this value and the updated deck
+            # If the dealer has less or equal 16 the dealer pull an other card the loop contineu
 
 def end_of_turn(result):
     print(result)
