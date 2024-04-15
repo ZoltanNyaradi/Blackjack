@@ -162,21 +162,38 @@ def game(player):
     deck = shuffle()
     # Create a shuffled deck
 
-    # while(True):
+    ### while(True):
     player_bet = bet(num_of_chips)
+    # Player bets and the bet is saved in a variable
     if (player_bet == "q"):
         return 
+        # Go back to main menu
 
     player_cards = []
+    # Create / recreate players hand
     dealer_cards = []
+    # Create / recreate dealers hand
     player_cards.append(deck.pop())
+    # Add a card from deck to player
     dealer_cards.append(deck.pop())
+    # Add a card from deck to dealer
     player_cards.append(deck.pop())
+    # Add an other card from deck to player
 
     display_cards(player_cards, dealer_cards)
     
-    result = player_move(player_cards, dealer_cards, deck)
-    deck = result[1]
+    player_move_result = player_move(player_cards, dealer_cards, deck)
+    if (player_move_result[0]=="q" or player_move_result[0]=="busted"):
+        end_of_turn("busted")
+        # Player lose his bet
+        return
+        # Go back to main menu
+
+    player_hand_value = player_move_result[0]
+    # Assign players hands value in a variable
+    deck = player_move_result[1]
+    # Updare deck
+
 
     # play()
         # display cards()
@@ -344,6 +361,9 @@ def hand_value(hand):
         # 100-89=11
     return sum_of_hand
         # Return the value of the hand
+
+def end_of_turn(result):
+    print(result)
 
 print()
 print("Welcome!\n")
