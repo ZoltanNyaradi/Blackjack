@@ -174,8 +174,9 @@ def game(player):
     player_cards.append(deck.pop())
 
     display_cards(player_cards, dealer_cards)
-
-    # while()
+    
+    result = player_move(player_cards, dealer_cards, deck)
+    deck = result[1]
 
     # play()
         # display cards()
@@ -247,7 +248,102 @@ def display_cards(player_cards, dealer_cards):
         # Display the player cards
     print("")
 
+def player_move(player_cards, dealer_cards, deck):
+    """
+    Player's turn to play
 
+    Ask player's move. If he asks card, stop or quit.
+    If he asks more card, he will be asked again if he doesn't bust or get 21.
+    It returns q for quit, "bust", "blackjack or the number what the is in the player hand
+    and the updated deck."
+    """
+    player_card_values = [card_value(player_cards[0][1]), card_value(player_cards[1][1])]
+    # Collect the value of the player cards. 
+
+    if(player_card_values[0] + player_card_values[1] == 110):
+        # For easier calculation ace worth 100 in the app
+        # Ace and a card what worth 10 is a blackjeck
+        print("Blackjack!\n")
+        # Print for the player that he has blackjack
+        return "blackjack", deck
+        # Return the result and the deck
+
+    while(True):
+        # Loop till the player doesn't stop or have more than 20
+        move = input("Card(c), Stop(s), Quit(q)\n")
+        # Players options
+
+        if (move=="c"):
+            # If the player ask for a card
+            player_cards.append(deck.pop())
+            # Move card from deck to player
+            display_cards(player_cards, dealer_cards)
+            # Display the cards agian
+            player_card_values.append(card_value(player_cards[-1][1]))
+            # Catch the new cards value
+            value_of_hand = hand_value(player_card_values)
+            # Calculate the value of players hand
+
+            if(value_of_hand > 21):
+                # If the player have more than 21
+                return "bust", deck
+                # Return "bust" and the updated deck
+
+            elif(value_of_hand == 21):
+                # If the player have 21
+                return 21, deck
+                # Return 21 and the new deck
+                # If its under 21 the loop continues
+
+        elif(move=="s"):
+            # If the player decided to stop
+            return player_cards, deck
+            # Return "s" and the new deck 
+
+        elif(move=="q"):
+            # If the player decided to quit
+            return "q", deck
+            # Return "q" and the new deck
+        else:
+            print("Invalid move!")
+            # In case of other input this error massage comes and the loop continue 
+        
+
+def card_value(card):
+    """
+    Take the cards rank and return a cards value.
+    In case of ace return 100.
+    """
+    if(card=="A"):
+        return 100
+        # If it's ace return 100
+    elif(card=="J" or card=="Q" or card=="K"):
+        return 10
+        # If the rank is J Q or K returns 10
+    else:
+        int_card = int(card)
+        return int_card
+        # If the rank is a number return the number but first turn it to an int
+
+def hand_value(hand):
+    """
+    Count and return the value of the hand
+    """
+    sum_of_hand = sum(hand)
+    # Sum the value of the hand
+    while(sum_of_hand>110):
+        # If the current value is more then 110 it means
+        # there is an ace, but if its value would be 11 it would be bust
+        # So it has to be 1
+        sum_of_hand-=99
+        # 100-99=1 We got the real value for this ace
+        # Because more ace can have the value 1 it is in a loop
+    if(sum_of_hand>100):
+        # If the value is between 101 and 110 there is an ace what has the value of 11
+        sum_of_hand-=89
+        # 100-89=11
+    return sum_of_hand
+        # Return the value of the hand
 
 print()
 print("Welcome!\n")
