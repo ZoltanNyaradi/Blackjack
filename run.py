@@ -185,12 +185,14 @@ def game(player):
     
     player_move_result = player_move(player_cards, dealer_cards, deck)
     if (player_move_result[0]=="q" or player_move_result[0]=="busted"):
-        end_of_turn("busted")
+        print("Busted")
+        lose(player_bet)
         # Player lose his bet
         return
         # Go back to main menu
 
-    player_hand_value = player_move_result[0]
+    player_cards = player_move_result[0]
+    player_hand_value = player_move_result[2]
     # Assign players hands value in a variable
     deck = player_move_result[1]
     # Update deck
@@ -202,7 +204,7 @@ def game(player):
     deck = dealer_move_result[1]
     # Update deck
 
-    
+    end_of_turn(player_hand_value, dealer_hand_value, player_bet)
     ## deck_check()
 
 def shuffle():
@@ -283,7 +285,7 @@ def player_move(player_cards, dealer_cards, deck):
         # Ace and a card what worth 10 is a blackjeck
         print("Blackjack!\n")
         # Print for the player that he has blackjack
-        return "blackjack", deck
+        return player_cards, deck, "blackjack"
         # Return the result and the deck
 
     while(True):
@@ -304,23 +306,24 @@ def player_move(player_cards, dealer_cards, deck):
 
             if(value_of_hand > 21):
                 # If the player have more than 21
-                return "bust", deck
+                return "bust", deck, "bust"
                 # Return "bust" and the updated deck
 
             elif(value_of_hand == 21):
                 # If the player have 21
-                return 21, deck
+                return player_cards, deck, 21
                 # Return 21 and the new deck
                 # If its under 21 the loop continues
 
         elif(move=="s"):
             # If the player decided to stop
-            return player_cards, deck
+            value_of_hand = hand_value(player_card_values)
+            return player_cards, deck, value_of_hand
             # Return "s" and the new deck 
 
         elif(move=="q"):
             # If the player decided to quit
-            return "q", deck
+            return "q", deck, "q"
             # Return "q" and the new deck
         else:
             print("Invalid move!")
@@ -384,7 +387,7 @@ def dealer_play(player_cards, dealer_cards, deck):
         if (value_of_dealer_hand>21):
             return "busted", deck
             # If the dealer has more than 21 return "busted", and the updated deck
-        elif (value_of_dealer_hand==21 and len(dealer_cards==2)):
+        elif (value_of_dealer_hand==21 and len(dealer_cards)==2):
             return "blackjack", deck
             # If the dealer has 21 from two cards return 21 and the updated deck 
         elif (value_of_dealer_hand>16):
@@ -392,9 +395,29 @@ def dealer_play(player_cards, dealer_cards, deck):
             # If the dealer has more than 16 return this value and the updated deck
             # If the dealer has less or equal 16 the dealer pull an other card the loop contineu
 
-def end_of_turn(result):
-    print(result)
-
+def end_of_turn(player_hand_value, dealer_hand_value, player_bet):
+    print(player_hand_value)
+    print(dealer_hand_value)
+    if (player_hand_value=="blackjack"):
+        if (dealer_hand_value=="blackjack"):
+            print("Tie!")
+        else:
+            print("You won!")
+            won(player_bet*1,5)
+    elif (dealer_hand_value=="blackjack"):
+        print("You lost!")
+        lost(player_bet)
+    elif (dealer_hand_value=="busted"):
+        print("You won!")
+        won(player_bet)
+    elif (player_hand_value>dealer_hand_value):
+        print("You won!")
+        won(player_bet)
+    elif (player_hand_value==dealer_hand_value): 
+        print("Tie!")
+    elif (player_hand_value<dealer_hand_value): 
+        print("You lost!")
+        lost(player_bet)
 print()
 print("Welcome!\n")
 #main()
