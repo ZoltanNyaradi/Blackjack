@@ -35,7 +35,7 @@ def main():
         print("Blackjack main menu\n")
         print("Leaderboard(l), Quit(q), Login(Enter)")
 
-        command=input()
+        command=input("\n")
         print()
 
         if(command=="l"):
@@ -88,7 +88,7 @@ def leaderboard():
 
     print("==================================")
 
-    input("Quit(Enter)")
+    input("Quit(Enter)\n")
     print()
     # As the enter is pressed, go back to the main menu
 
@@ -101,7 +101,7 @@ def login():
     It is possible to go back to the main menu.
     '''
     print("Enter you name!\nQuit(q)")
-    player = input()
+    player = input("\n")
     print()
     # Ask the player name
 
@@ -118,7 +118,7 @@ def login():
         print("This player doesn't exist! Do you want to register?")
         # If this player doesn't exist, give the opportunity to create it
         while(True):
-            register = input("Yes(y), No(n): ")
+            register = input("Yes(y), No(n)\n")
             # Players decison
             print()
             if(register == "y"):
