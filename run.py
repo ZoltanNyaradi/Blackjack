@@ -234,7 +234,7 @@ def bet(num_of_chips):
     Ask and wait for bet.
     """
     while(True):
-            bet = input("Take your bet!\nBet(Any number), Quit(q)\n")
+            bet = input(f"Take your bet! Your chips: {num_of_chips}$\nBet(Any number), Quit(q)\n")
             # Input
             if(bet == "q"):
                 return "q"
@@ -262,7 +262,8 @@ def display_cards(player_cards, dealer_cards):
     """
     Display the cards for the player
     """
-    print("Dealer's hand")
+    print("==================================")
+    print("Dealers hand")
     for i in range(len(dealer_cards)):
         print(f"[{dealer_cards[i]}]",end="")
         # Display the dealers cards
@@ -341,7 +342,7 @@ def card_value(card):
     if(card=="A"):
         return 100
         # If it's ace return 100
-    elif(card=="J" or card=="Q" or card=="K" or "1"):
+    elif(card=="J" or card=="Q" or card=="K" or card=="1"):
         return 10
         # If the rank is J, Q, K or 10 returns 10
     else:
@@ -366,7 +367,6 @@ def hand_value(hand):
         # If the value is between 101 and 110 there is an ace what has the value of 11
         sum_of_hand-=89
         # 100-89=11
-    print(f"Sum: {sum_of_hand}")
     return sum_of_hand
         # Return the value of the hand
 
@@ -387,7 +387,6 @@ def dealer_play(player_cards, dealer_cards, deck):
         # Display the current cards
         value_of_dealer_hand = hand_value(dealer_card_values)
         # Calculate the value of dealers hand
-
         if (value_of_dealer_hand>21):
             return "bust", deck
             # If the dealer has more than 21 return "busted", and the updated deck
