@@ -413,7 +413,7 @@ def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
             print("You won!")
             # Print win
             if (player_bet%2==1):
-                player_bet++
+                player_bet+=1
             # In case of odd bet add 1 to it to avoid flooting number in the next step 
             win(player_bet*1.5, player_index)
             # Add the bet 1.5 times to players account
