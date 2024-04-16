@@ -341,9 +341,9 @@ def card_value(card):
     if(card=="A"):
         return 100
         # If it's ace return 100
-    elif(card=="J" or card=="Q" or card=="K"):
+    elif(card=="J" or card=="Q" or card=="K" or "1"):
         return 10
-        # If the rank is J Q or K returns 10
+        # If the rank is J, Q, K or 10 returns 10
     else:
         int_card = int(card)
         return int_card
@@ -366,6 +366,7 @@ def hand_value(hand):
         # If the value is between 101 and 110 there is an ace what has the value of 11
         sum_of_hand-=89
         # 100-89=11
+    print(f"Sum: {sum_of_hand}")
     return sum_of_hand
         # Return the value of the hand
 
@@ -474,5 +475,4 @@ def lose(player_bet, player_index):
 
 print()
 print("Welcome!\n")
-#main()
-game("Zoltan")
+main()
