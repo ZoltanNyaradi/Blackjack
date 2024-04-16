@@ -155,57 +155,61 @@ def game(player):
     # Get the chips worksheet
     player_index = chips_worksheet.row_values(1).index(player)+1
     # Get player index
-    num_of_chips = int(chips_worksheet.cell(2,player_index).value)
-    # Get player chips
     
-    ## while(True):
-
     deck = shuffle()
-    # Create a shuffled deck
 
-    ### while(True):
-    player_bet = bet(num_of_chips)
-    # Player bets and the bet is saved in a variable
-    if (player_bet == "q"):
-        return 
-        # Go back to main menu
+    while(True):
+        num_of_chips = int(chips_worksheet.cell(2,player_index).value)
+        # Get player chips
 
-    player_cards = []
-    # Create / recreate players hand
-    dealer_cards = []
-    # Create / recreate dealers hand
-    player_cards.append(deck.pop())
-    # Add a card from deck to player
-    dealer_cards.append(deck.pop())
-    # Add a card from deck to dealer
-    player_cards.append(deck.pop())
-    # Add an other card from deck to player
+        player_bet = bet(num_of_chips)
+        # Player bets and the bet is saved in a variable
+        if (player_bet == "q"):
+            return 
+            # Go back to main menu
 
-    display_cards(player_cards, dealer_cards)
-    
-    player_move_result = player_move(player_cards, dealer_cards, deck)
-    if (player_move_result[0]=="q" or player_move_result[0]=="busted"):
-        print("Busted")
-        lose(player_bet, player_index)
-        # Player lose his bet
-        return
-        # Go back to main menu
+        player_cards = []
+        # Create / recreate players hand
+        dealer_cards = []
+        # Create / recreate dealers hand
+        player_cards.append(deck.pop())
+        # Add a card from deck to player
+        dealer_cards.append(deck.pop())
+        # Add a card from deck to dealer
+        player_cards.append(deck.pop())
+        # Add an other card from deck to player
 
-    player_cards = player_move_result[0]
-    player_hand_value = player_move_result[2]
-    # Assign players hands value in a variable
-    deck = player_move_result[1]
-    # Update deck
+        display_cards(player_cards, dealer_cards)
+        # Show 2 cards for the player and one for the dealer
+        
+        player_move_result = player_move(player_cards, dealer_cards, deck)
+        if (player_move_result[0]=="q"):
+            lose(player_bet, player_index)
+            # Player lose his bet
+            return
+            # Go back to main menu
+        elif (player_move_result[0]=="bust"):
+            print("Bust")
+            lose(player_bet, player_index)
+        else:
+            player_cards = player_move_result[0]
+            player_hand_value = player_move_result[2]
+            # Assign players hands value in a variable
+            deck = player_move_result[1]
+            # Update deck
 
-    dealer_move_result = dealer_play(player_cards, dealer_cards, deck)
-    # Dealers turn 
-    dealer_hand_value = dealer_move_result[0]
-    # Assign dealers hands value in a variable
-    deck = dealer_move_result[1]
-    # Update deck
+            dealer_move_result = dealer_play(player_cards, dealer_cards, deck)
+            # Dealers turn 
+            dealer_hand_value = dealer_move_result[0]
+            # Assign dealers hands value in a variable
+            deck = dealer_move_result[1]
+            # Update deck
 
-    end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index)
-    ## deck_check()
+            end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index)
+            # Calculate the winner and update the accont
+
+            if (len(deck)<120):
+                deck = shuffle()
 
 def shuffle():
     """
@@ -250,7 +254,7 @@ def bet(num_of_chips):
                         print()
                         return bet_int
                         # In case of a valid number return the bet
-                except():
+                except:
                     print("Wrong value!\n")
                         # If it is not a number
 
@@ -329,7 +333,6 @@ def player_move(player_cards, dealer_cards, deck):
             print("Invalid move!")
             # In case of other input this error massage comes and the loop continue 
         
-
 def card_value(card):
     """
     Take the cards rank and return a cards value.
@@ -385,7 +388,7 @@ def dealer_play(player_cards, dealer_cards, deck):
         # Calculate the value of dealers hand
 
         if (value_of_dealer_hand>21):
-            return "busted", deck
+            return "bust", deck
             # If the dealer has more than 21 return "busted", and the updated deck
         elif (value_of_dealer_hand==21 and len(dealer_cards)==2):
             return "blackjack", deck
@@ -397,45 +400,77 @@ def dealer_play(player_cards, dealer_cards, deck):
 
 def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
     """
-    Commpears 
+    Commpear the players and the dealers hand.
+    Than call either the win or lose def or none of them. 
     """
-    print(f"player_bet{player_bet}")
-    print(f"player_index{player_index}")
     if (player_hand_value=="blackjack"):
         if (dealer_hand_value=="blackjack"):
+            # If both the player and the dealer have blackjack
             print("Tie!")
+            # Print tie, the turn is ended
         else:
+            # If only the player has blackjack
             print("You won!")
-            won(player_bet*1.5, player_index)
+            # Print win
+            if (player_bet%2==1):
+                player_bet++
+            # In case of odd bet add 1 to it to avoid flooting number in the next step 
+            win(player_bet*1.5, player_index)
+            # Add the bet 1.5 times to players account
     elif (dealer_hand_value=="blackjack"):
+        # If only the dealer has blackjack
         print("You lost!")
-        lost(player_bet, player_index)
-    elif (dealer_hand_value=="busted"):
+        # Print lose
+        lose(player_bet, player_index)
+        # Take the bet from the players account
+    elif (dealer_hand_value=="bust"):
+        # If the dealer busted
         print("You won!")
-        won(player_bet, player_index)
+        # Print win
+        win(player_bet, player_index)
+        # Add the bet to the players account
     elif (player_hand_value>dealer_hand_value):
+        # If the player have bigger number
         print("You won!")
-        won(player_bet, player_index)
-    elif (player_hand_value==dealer_hand_value): 
+        # Print win
+        win(player_bet, player_index)
+        # Add the bet to the players account
+    elif (player_hand_value==dealer_hand_value):
+        # If the player and the dealer have the same number 
         print("Tie!")
+        # Print tie
     elif (player_hand_value<dealer_hand_value): 
+        # If the player has less
         print("You lost!")
-        lost(player_bet, player_index)
+        # Print lose
+        lose(player_bet, player_index)
+        # Take the bet from the players account
 
-def won(player_bet, player_index):
+def win(player_bet, player_index):
+    """
+    Add the bet to the players account.
+    """
     chips_worksheet = SHEET.worksheet("chips")
     # Get the chips worksheet
     num_of_chips = int(chips_worksheet.cell(2, player_index).value)
+    # Get the chips from the worksheet
     num_of_chips += player_bet
+    # Add the bet to it
     chips_worksheet.update_cell(2, player_index, num_of_chips)
+    # Load back the updated chips
 
-def lost(player_bet, player_index):
+def lose(player_bet, player_index):
+    """
+    Subtrack the bet from the players account
+    """
     chips_worksheet = SHEET.worksheet("chips")
     # Get the chips worksheet
     num_of_chips = int(chips_worksheet.cell(2, player_index).value)
+    # Get the chips from the worksheet
     num_of_chips -= player_bet
+    # Subtrackt the bet from it
     chips_worksheet.update_cell(2, player_index, num_of_chips)
-
+    # Load back the updated chips
 
 print()
 print("Welcome!\n")
