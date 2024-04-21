@@ -117,24 +117,37 @@ def login():
         game(player)
         # Enter the game whit the given name
     else:
-        print("This player doesn't exist! Do you want to register?")
+        print("This player name doesn't exist! Do you want to register?")
         # If this player doesn't exist, give the opportunity to create it
         while(True):
             register = input("Yes(y), No(n)\n")
             # Players decison
             print()
             if(register == "y"):
-                create_player(player)
-                # If it is "y" create a player
+                if(len(player)<2 or len(player)>16):
+                    # If the player's name is too short or too long.
+                    print("Name's length has to be between 3 and 15!\n")
+                    login()
+                    # Go back to login.
+                    break
+                elif(player[0] == " " or player[-1]):
+                    # If the player's name start or and with a space.
+                    print("Player's name can't start or end with space!\n")
+                    login()
+                    # Go back to login.
+                    break
+                else:
+                    create_player(player)
+                # If it is "y" create a player.
                 break
             elif(register == "n"):
                 login()
-                # If it is "n" go back to login
+                # If it is "n" go back to login.
                 break
             else:
                 print("Incorrect input!")
                 # If the aswer is incorrect don't break the loop
-                # and repeat the question
+                # and repeat the question.
 
 def create_player(player):
     """
@@ -246,8 +259,8 @@ def bet(num_of_chips):
                     bet_int = int(bet)
                     # Try to turn into an int the input
                     if(num_of_chips<bet_int):
-                        print("You don't have inaf chips!\n")
-                        # If not inaf chips
+                        print("You don't have enough chips!\n")
+                        # If not enough chips
                     
                     elif(0>=bet_int):
                         print("Bet must be bigger than 0\n")
@@ -265,7 +278,7 @@ def display_cards(player_cards, dealer_cards):
     Display the cards for the player
     """
     print("==================================")
-    print("Dealers hand")
+    print("Dealer's hand")
     for i in range(len(dealer_cards)):
         print(f"[{dealer_cards[i]}]",end="")
         # Display the dealers cards
