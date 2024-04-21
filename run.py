@@ -290,7 +290,7 @@ def display_cards(player_cards, dealer_cards):
         # Display the dealers cards
     print("\n\nYour hand")
     for i in range(len(player_cards)):
-        time. sleep(1)
+        time. sleep(1)  
         print(f"[{player_cards[i]}]",end="")
         # Display the player cards
     print("\n")
