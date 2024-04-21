@@ -285,10 +285,12 @@ def display_cards(player_cards, dealer_cards):
     print("==================================")
     print("Dealer's hand")
     for i in range(len(dealer_cards)):
+        time. sleep(1)
         print(f"[{dealer_cards[i]}]",end="")
         # Display the dealers cards
     print("\n\nYour hand")
     for i in range(len(player_cards)):
+        time. sleep(1)
         print(f"[{player_cards[i]}]",end="")
         # Display the player cards
     print("\n")
@@ -435,25 +437,25 @@ def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player):
             if (player_bet%2==1):
                 player_bet+=1
             # In case of odd bet add 1 to it to avoid flooting number in the next step 
-            win(player_bet*1.5, player.index)
+            win(player_bet*1.5, player)
             # Add the bet 1.5 times to players account
     elif (dealer_hand_value=="blackjack"):
         # If only the dealer has blackjack
         print("You lost!")
         # Print lose
-        lose(player_bet, player.index)
+        lose(player_bet, player)
         # Take the bet from the players account
     elif (dealer_hand_value=="bust"):
         # If the dealer busted
         print("You won!")
         # Print win
-        win(player_bet, player.index)
+        win(player_bet, player)
         # Add the bet to the players account
     elif (player_hand_value>dealer_hand_value):
         # If the player have bigger number
         print("You won!")
         # Print win
-        win(player_bet, player.index)
+        win(player_bet, player)
         # Add the bet to the players account
     elif (player_hand_value==dealer_hand_value):
         # If the player and the dealer have the same number 
@@ -463,7 +465,7 @@ def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player):
         # If the player has less
         print("You lost!")
         # Print lose
-        lose(player_bet, player.index)
+        lose(player_bet, player)
         # Take the bet from the players account
 
 def win(player_bet, player):
