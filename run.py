@@ -33,7 +33,7 @@ def main():
     """
     while(True):
         print("Blackjack main menu\n")
-        print("Leaderboard(l), Quit(q), Login(Enter)")
+        print("Leaderboard(l), Quit(q), Login/Registration(r)")
 
         command=input("\n")
         print()
@@ -43,8 +43,10 @@ def main():
         elif(command=="q"):
             print("Blackjack is closed!")
             return
-        else:
+        elif(command=="r"):
             login()
+        else:
+            login("Incorrect input!\n")
 
 def leaderboard():
     """
