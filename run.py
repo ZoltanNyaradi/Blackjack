@@ -2,6 +2,7 @@ import gspread
 import random
 import time
 from google.oauth2.service_account import Credentials
+from player import Player
 
 print("""
     ■   ■■■ ■■■ ■  ■   ■ ■■■ ■■■ ■  ■
@@ -103,19 +104,23 @@ def login():
     It is possible to go back to the main menu.
     '''
     print("Enter you name!\nQuit(q)")
-    player = input("\n")
+    player = Player("0","",10000)
+    player.name = input("\n")
     print()
     # Ask the player name
 
     chips = SHEET.worksheet("chips").get_all_values()
     # Load the players
 
-    if(player=="q"):
+    if(player.name =="q"):
         return
         # Go back to main if it was "q" instead of a name
-    elif(player in chips[0]):
+    elif(player.name in chips[0]):
+        player.index = chips[0].index(player.name)+1
+        # Get player index
+        player.chips = int(chips[1][player.index-1])
         game(player)
-        # Enter the game whit the given name
+        # Enter the game with the given name
     else:
         print("This player name doesn't exist! Do you want to register?")
         # If this player doesn't exist, give the opportunity to create it
@@ -124,13 +129,13 @@ def login():
             # Players decison
             print()
             if(register == "y"):
-                if(len(player)<2 or len(player)>16):
+                if(len(player.name)<2 or len(player.name)>16):
                     # If the player's name is too short or too long.
                     print("Name's length has to be between 3 and 15!\n")
                     login()
                     # Go back to login.
                     break
-                elif(player[0] == " " or player[-1]):
+                elif(player.name[0] == " " or player.name[-1] == " "):
                     # If the player's name start or and with a space.
                     print("Player's name can't start or end with space!\n")
                     login()
@@ -155,29 +160,22 @@ def create_player(player):
     """
     chips_worksheet = SHEET.worksheet("chips")
     # Get the chips worksheet
-    new_player_index = len(chips_worksheet.row_values(1))+1
+    player.index = len(chips_worksheet.row_values(1))+1
     # Get the last player index and add one
-    chips_worksheet.update_cell(1,new_player_index,player)
+    chips_worksheet.update_cell(1,player.index,player.name)
     # Add the new player to the sheet
-    chips_worksheet.update_cell(2,new_player_index,1000)
-    # Add him 1000 chips
+    chips_worksheet.update_cell(2,player.index,player.chips)
+    # Add him 10000 chips
     game(player)
     # Start the game
 
 def game(player):
-    
-    chips_worksheet = SHEET.worksheet("chips")
-    # Get the chips worksheet
-    player_index = chips_worksheet.row_values(1).index(player)+1
-    # Get player index
-    
+
     deck = shuffle()
 
     while(True):
-        num_of_chips = int(chips_worksheet.cell(2,player_index).value)
-        # Get player chips
 
-        player_bet = bet(num_of_chips)
+        player_bet = bet(player)
         # Player bets and the bet is saved in a variable
         if (player_bet == "q"):
             return 
@@ -199,13 +197,13 @@ def game(player):
         
         player_move_result = player_move(player_cards, dealer_cards, deck)
         if (player_move_result[0]=="q"):
-            lose(player_bet, player_index)
+            lose(player_bet, player)
             # Player lose his bet
             return
             # Go back to main menu
         elif (player_move_result[0]=="bust"):
             print("Bust")
-            lose(player_bet, player_index)
+            lose(player_bet, player)
         else:
             player_cards = player_move_result[0]
             player_hand_value = player_move_result[2]
@@ -220,11 +218,16 @@ def game(player):
             deck = dealer_move_result[1]
             # Update deck
 
-            end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index)
+            end_of_turn(player_hand_value, dealer_hand_value, player_bet, player)
             # Calculate the winner and update the accont
 
-            if (len(deck)<120):
-                deck = shuffle()
+        if (len(deck)<90):
+            deck = shuffle()
+
+        chips_worksheet = SHEET.worksheet("chips")
+        player.chips = int(chips_worksheet.cell(2,player.index).value)
+        # Update chips
+
 
 def shuffle():
     """
@@ -244,21 +247,23 @@ def shuffle():
         # Take a random card from the ordered to the unorderd deck
     return shuffled_deck
 
-def bet(num_of_chips):
+def bet(player):
     """
     Ask and wait for bet.
     """
     while(True):
-            bet = input(f"Take your bet! Your chips: {num_of_chips}$\nBet(Any number), Quit(q)\n")
+            bet = input(f"Place your bet! Your chips: {player.chips}$\nBet(Any number), Quit(q)\n")
             # Input
             if(bet == "q"):
                 return "q"
                 # Return q so the game def can also return
             else:
                 try:
+                    print(bet)
+                    print(player.chips)
                     bet_int = int(bet)
                     # Try to turn into an int the input
-                    if(num_of_chips<bet_int):
+                    if(player.chips<bet_int):
                         print("You don't have enough chips!\n")
                         # If not enough chips
                     
@@ -413,7 +418,7 @@ def dealer_play(player_cards, dealer_cards, deck):
             # If the dealer has more than 16 return this value and the updated deck
             # If the dealer has less or equal 16 the dealer pull an other card the loop contineu
 
-def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
+def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player):
     """
     Commpear the players and the dealers hand.
     Than call either the win or lose def or none of them. 
@@ -430,25 +435,25 @@ def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
             if (player_bet%2==1):
                 player_bet+=1
             # In case of odd bet add 1 to it to avoid flooting number in the next step 
-            win(player_bet*1.5, player_index)
+            win(player_bet*1.5, player.index)
             # Add the bet 1.5 times to players account
     elif (dealer_hand_value=="blackjack"):
         # If only the dealer has blackjack
         print("You lost!")
         # Print lose
-        lose(player_bet, player_index)
+        lose(player_bet, player.index)
         # Take the bet from the players account
     elif (dealer_hand_value=="bust"):
         # If the dealer busted
         print("You won!")
         # Print win
-        win(player_bet, player_index)
+        win(player_bet, player.index)
         # Add the bet to the players account
     elif (player_hand_value>dealer_hand_value):
         # If the player have bigger number
         print("You won!")
         # Print win
-        win(player_bet, player_index)
+        win(player_bet, player.index)
         # Add the bet to the players account
     elif (player_hand_value==dealer_hand_value):
         # If the player and the dealer have the same number 
@@ -458,33 +463,29 @@ def end_of_turn(player_hand_value, dealer_hand_value, player_bet, player_index):
         # If the player has less
         print("You lost!")
         # Print lose
-        lose(player_bet, player_index)
+        lose(player_bet, player.index)
         # Take the bet from the players account
 
-def win(player_bet, player_index):
+def win(player_bet, player):
     """
     Add the bet to the players account.
     """
     chips_worksheet = SHEET.worksheet("chips")
     # Get the chips worksheet
-    num_of_chips = int(chips_worksheet.cell(2, player_index).value)
-    # Get the chips from the worksheet
-    num_of_chips += player_bet
-    # Add the bet to it
-    chips_worksheet.update_cell(2, player_index, num_of_chips)
+    player.chips += player_bet
+    # Add the bet to the chips
+    chips_worksheet.update_cell(2, player.index, player.chips)
     # Load back the updated chips
 
-def lose(player_bet, player_index):
+def lose(player_bet, player):
     """
     Subtrack the bet from the players account
     """
     chips_worksheet = SHEET.worksheet("chips")
     # Get the chips worksheet
-    num_of_chips = int(chips_worksheet.cell(2, player_index).value)
-    # Get the chips from the worksheet
-    num_of_chips -= player_bet
-    # Subtrackt the bet from it
-    chips_worksheet.update_cell(2, player_index, num_of_chips)
+    player.chips -= player_bet
+    # Subtrack the bet from the chips
+    chips_worksheet.update_cell(2, player.index, player.chips)
     # Load back the updated chips
 
 print()
