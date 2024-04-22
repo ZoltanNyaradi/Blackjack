@@ -282,12 +282,10 @@ def display_cards(player_cards, dealer_cards):
     print("==================================")
     print("Dealer's hand")
     for i in range(len(dealer_cards)):
-        time. sleep(1)
         print(f"[{dealer_cards[i]}]",end="")
         # Display the dealers cards
     print("\n\nYour hand")
     for i in range(len(player_cards)):
-        time. sleep(1)  
         print(f"[{player_cards[i]}]",end="")
         # Display the player cards
     print("\n")
@@ -316,7 +314,8 @@ def player_move(player_cards, dealer_cards, deck):
         # Loop till the player doesn't stop or have more than 20
         move = input("Card(c), Stop(s), Quit(q)\n")
         # Players options
-
+        time. sleep(1)
+        # Wait one second
         if (move=="c"):
             # If the player ask for a card
             player_cards.append(deck.pop())
@@ -396,8 +395,8 @@ def dealer_play(player_cards, dealer_cards, deck):
     dealer_card_values = [card_value(dealer_cards[0][1])]
     # Add player cards value to a list
     while(True):
-        time. sleep(2)
-        # wait 2 second
+        time. sleep(3)
+        # wait 3 second
         dealer_cards.append(deck.pop())
         # Move a card from deck to dealers hand
         dealer_card_values.append(card_value(dealer_cards[-1][1]))
