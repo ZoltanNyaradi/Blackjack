@@ -36,7 +36,7 @@ def main():
         print("Blackjack main menu\n")
         print("Leaderboard(l), Quit(q), Login/Registration(r)")
 
-        command=input("\n")
+        command=input()
         print()
 
         if(command=="l"):
@@ -228,11 +228,11 @@ def game(player):
         player.chips = int(chips_worksheet.cell(2,player.index).value)
         # Update chips
 
-
 def shuffle():
     """
     Give back 4 shuffled deck
     """
+    print("Shuffle cards.\n")
     card_types = ["♠","♥","♦","♣"]
     card_numbers = [str(card_number) for card_number in range(2,11)]+["J","Q","K","A"]
     # A list of card numbers
@@ -254,24 +254,21 @@ def bet(player):
     while(True):
             bet = input(f"Place your bet! Your chips: {player.chips}$\nBet(Any number), Quit(q)\n")
             # Input
+            print()
             if(bet == "q"):
                 return "q"
                 # Return q so the game def can also return
             else:
                 try:
-                    print(bet)
-                    print(player.chips)
                     bet_int = int(bet)
                     # Try to turn into an int the input
                     if(player.chips<bet_int):
                         print("You don't have enough chips!\n")
                         # If not enough chips
-                    
                     elif(0>=bet_int):
                         print("Bet must be bigger than 0\n")
                         # In case of negative number or 0
                     else:
-                        print()
                         return bet_int
                         # In case of a valid number return the bet
                 except:
