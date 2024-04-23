@@ -34,7 +34,10 @@ You can play the real simulation of the game with real shuffling system with rea
 - [Testing](#testing)
   - [Detailed Testing](#detailed-testing)
   - [Fixed Bugs](#fixed-bugs)
-  - [PEP 8 Style Checker](pep-8-style-checker)
+  - [PEP 8 Style Checker](#pep-8-style-checker)
+- [Credits](#credits)
+  - [Source](#source)
+  - [Acknowledgements](#acknowledgements)
 
 ## Application Goals
 
@@ -204,3 +207,18 @@ Manual testing can be found in the [TESTING.md](TESTING.md) file.
 ### PEP 8 Style Checker
 
 To check and upgrade code style [code:wof](https://www.codewof.co.nz/style/python3/) was used.
+
+## Credits
+
+### Source
+
+Blackjack image originated from Pixabay.
+
+### Acknowledgements
+
+I would like to thank for
+ - my mentor Jubril Akolade who helped me with his valuable views.
+ - Juhász Áron who tried the game.
+ - Code Institute for teaching me Python and Gspread.
+
+
