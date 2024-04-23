@@ -30,7 +30,7 @@
 | Feature | Action | Expected Result | Result |
 |---|---|---|---|
 | Login | Enter existing name | Game start with the correct player | Works |
-| Ask registration | Enter new name | Confirmation cuestion comes up | Works |
+| Ask registration | Enter new name | Confirmation question comes up | Works |
 | Back to Main | Enter "q" | Main opens | Works |
 
 
@@ -47,14 +47,14 @@
 
 | Feature | Action | Expected Result | Result |
 |---|---|---|---|
-| Shuffle | Start game | "Shuffle cards."message comes up | Works |
-| Reshuffle | Play till 90 cards left | "Shuffle cards."message comes up | Works |
+| Shuffle | Start game | "Shuffle cards." message comes up | Works |
+| Reshuffle | Play till 90 cards left | "Shuffle cards." message comes up | Works |
 
 ### Bet
 
 | Feature | Action | Expected Result | Result |
 |---|---|---|---|
-| Bet | Enter a correct number | Trun starts | Works |
+| Bet | Enter a correct number | Turn starts | Works |
 | Bet too much | Enter more than number of chips | Error message comes up | Works |
 | Bet too small | Enter 0 or under | Error message comes up | Works |
 | Bet non-integer or non-number | Enter non-integer number or enter not a number | Error message comes up | Works |
@@ -64,7 +64,7 @@
 
 | Feature | Action | Expected Result | Result |
 |---|---|---|---|
-| Blackjack | Get blackjack | Player move skiped | Works |
+| Blackjack | Get blackjack | Player move skipped | Works |
 | Ask card | Enter "c" | Gets a new card | Works |
 | Bust | Get more than 21 after new card | Bust message | Works |
 | 21 | Get 21 after new card | Player can't make more move | Works |
@@ -100,4 +100,4 @@
 |---|---|---|---|
 | Dispaly | Correct bet, Player move new card, Dealer move new car | Display the card when there is a new one | Works |
 | J Q K | Play till these cards appears | These cards worth 10  | Works |
-| A | Play till both senario | Ace worth 1 or 11  | Works |
+| A | Play till both scenario | Ace worth 1 or 11  | Works |
