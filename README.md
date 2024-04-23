@@ -2,14 +2,14 @@
 
 ![Blackjack](documentation/blackjack.jpg)
 
-Blackjack is one of the most famos caisino game. Requires not just luck, but knowlage of the best stategy. Try yourself against the house. Reach more than the house and take all the chips. [Blackjack](https://blackjack-nyz-4419f61705c1.herokuapp.com/)
+Blackjack is one of the most famous casino game. Requires not just luck, but knowledge of the best strategy. Try yourself against the house. Reach more than the house and take all the chips. [Blackjack](https://blackjack-nyz-4419f61705c1.herokuapp.com/)
 
 You can play the real simulation of the game with real shuffling system with real odds, and rules. For learn more about the game read the relevant [Wikipedia](https://en.wikipedia.org/wiki/Blackjack) page.
 
 ## Contents
   - [Application Goals](#application-goals)
-  - [Planing](#planing)
-  - [Featchers](#featchers)
+  - [Planning](#planning)
+  - [Features](#features)
     - [Loading Screen](#loading-screen)
     - [Main Menu](#main-menu)
     - [Leaderboard](#leaderboard)
@@ -21,7 +21,7 @@ You can play the real simulation of the game with real shuffling system with rea
     - [Player Move](#player-move)
     - [Dealer Move](#dealer-move)
     - [Turn End](#turn-end)
-    - [Future Implementions](#future-implementions)
+    - [Future Implementations](#future-implementations)
 - [Technologies Used](#technologies-used)
     - [Used Language](#used-language)
     - [Used Applications](#used-applications)
@@ -43,23 +43,23 @@ You can play the real simulation of the game with real shuffling system with rea
 
  - Have a "database" what holds the player names and their chips.
  - Possibility to register a new player.
- - Leaderboard amoung of the players by chips.
+ - Leaderboard among of the players by chips.
  - The players can enter the game with his name.
- - The game it self with real game flow.
-   - Card shaffle and deal with the same probalities as in the real world.
+ - The game itself with real game flow.
+   - Card shaffle and deal with the same probaibilities as in the real world.
    - Same rules, moves in the same order as in a real cassino.
 
-## Planing
+## Planning
 
 All the options what the player can do in the application is visible on the player experience flowchart below.
 
 ![Flowchart](documentation/blackjack-flowchart.png)
 
-## Featchers
+## Features
 
 ### Loading Screen
 
-As the application is started blackjack title and "loading..." text appear. The appliaction reachs out the google sheet via gspread, when it is succeed "Welcome!" text appears and we enter the main menu.
+As the application is started blackjack title and "loading..." text appear. The appliction reaches out the google sheet via Gspread, when it is succeeded "Welcome!" text appears and we enter the main menu.
 
 ![Loading Screen](documentation/loading-screen.PNG)
 
@@ -69,7 +69,7 @@ From here the player can
  - go to leaderboard
  - go to login / registration
  - or close the application.
-Also the player can return here from everywhere.
+Also, the player can return here from everywhere.
 
 ![Main Menu](documentation/main-menu.PNG)
 
@@ -81,7 +81,7 @@ Here shows up the top 10 player by chips.
 
 ### Login and Registration
 
-The player enter his player name here, if it's already exist than enters to the game. If isn't than he can register it if he decide to do so.
+The player enters his player name here, if it's already exist than enters to the game. If isn't than he can register it if he decides to do so.
 
 ![Registration](documentation/registration.PNG)
 
@@ -93,10 +93,10 @@ Game starts with shuffle than the players bet.
 
 #### Shuffle
 
-Everytime the cars are shuffled
+Every time the cars are shuffled
   - in the beginning of the game
   - and if the most of the cards already played from the deck
-the application notify the usere about it.
+the application notify the user about it.
 
 #### Bet
 
@@ -114,15 +114,15 @@ Seeing the cards the player can decide his move.
 
 #### Dealer Move
 
-After the player finished his turn. It's the dealers turn. All the new cards appers with a 2 second dealy.
+After the player finished his turn. It's the dealers turn. All the new card appears with a 2 second delay.
 
 #### Turn End
 
 In the end the player gets his reward or loses his bet depending of he or the dealer had better cards or any of them busted and gets back his chips if it was a tie.
 
-### Future Implementions
+### Future Implementations
 
-In the future will be possible doubbling down and caed spliting as player moves.
+In the future will be possible doubling down and card splitting as player moves.
 
 ## Technologies Used
 
@@ -134,12 +134,13 @@ The code was written in Python.
 
 | Application | It was used to |
 | --- | --- |
-| drow.io | drow flowchart. |
+| drow.io | Drow flowchart. |
 | Github | save project. |
 | Git | manage versions. |
 | Heroku | deploy project. |
 | Sublime text | develop Python code. |
-| tinypng.com | reduce image sizes in documentation |
+| tinypng.com | reduce image sizes in documentation. |
+| Ms office word | correct spelling. |
 
 ### Libraries
 
@@ -155,7 +156,7 @@ The code was written in Python.
 The Application has been deployed from GitHub to Heroku by following the steps:
 
 1. Create or log in to your account at heroku.com
-2. Create a new app, add a unique app name ( for example blackjack-nyz) and then choose your region
+2. Create a new app, add a unique app name (for example blackjack-nyz) and then choose your region
 3. Click on create app
 4. Go to "Settings"
 5. Under Config Vars add the private API key information using key 'CRED' and into the value area copy the API key information added to the .json file.  Also add a key 'PORT' and value '8000'.
@@ -198,11 +199,11 @@ Manual testing can be found in the [TESTING.md](TESTING.md) file.
 | Bug | Cause | Solution |
 | --- | --- | --- |
 | Type miss match at compering player and dealer hand. | List of player cards was compered to value of dealer hand. | Value of the player hand was passed to there and changed with the list. |
-| Missing variable. | The same variable had two different name. | The variable was unified. |
-| Syntax error. | ++ doesn't exist in Python. | +=1 was used insted. |
-| Deployment wasn't succesfull. | One import had a typo in requirement. | It was corrected.|
+| Missing variable. | The same variable had two different names. | The variable was unified. |
+| Syntax error. | ++ doesn't exist in Python. | +=1 was used instead. |
+| Deployment wasn't successful. | One import had a typo in requirement. | It was corrected.|
 | Some hands had wrong value. | From the card 10 only the "1" was cut out. So it had the value of 1. | "1" is handled now as "J", "Q" and "K" not as a number. |
-| Every card had the value of 10 | Fixing the previus error "1" was used inted of card=="1" in the if statment so it was alway true. | The statement was finished, as it should be. |
+| Every card had the value of 10 | Fixing the previous error "1" was used instead of card=="1" in the if statement so it was always true. | The statement was finished, as it should be. |
 
 ### PEP 8 Style Checker
 
