@@ -49,7 +49,7 @@ def main():
         elif(command == "r"):
             login()
         else:
-            login("Incorrect input!\n")
+            print("Incorrect input!\n")
 
 
 def leaderboard():
