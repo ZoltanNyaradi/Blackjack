@@ -1,6 +1,6 @@
 # Blackjack
 
-![Blackjack](documentation/blackjack.png)
+![Blackjack](documentation/blackjack.jpg)
 
 Blackjack is one of the most famos caisino game. Requires not just luck, but knowlage of the best stategy. Try yourself against the house. Reach more than the house and take all the chips. [Blackjack](https://blackjack-nyz-4419f61705c1.herokuapp.com/)
 
@@ -13,7 +13,7 @@ You can play the real simulation of the game with real shuffling system with rea
     - [Loading Screen](#loading-screen)
     - [Main Menu](#main-menu)
     - [Leaderboard](#leaderboard)
-    - [Login / Registration](#login-/-registration)
+    - [Login and Registration](#login-and-registration)
     - [Game](#game)
     - [Shuffle](#shuffle)
     - [Bet](#bet)
@@ -26,7 +26,7 @@ You can play the real simulation of the game with real shuffling system with rea
     - [Used Language](#used-language)
     - [Used Applications](#used-applications)
     - [Libraries](#libraries)
-- [Deployment & Local Development](#deployment-&-local-development)
+- [Deployment and Local Development](#deployment-and-local-development)
   - [Heroku](#heroku)
   - [Local Development](#local-development)
     - [How to Fork](#how-to-fork)
@@ -34,6 +34,7 @@ You can play the real simulation of the game with real shuffling system with rea
 - [Testing](#testing)
   - [Detailed Testing](#detailed-testing)
   - [Fixed Bugs](#fixed-bugs)
+  - [PEP 8 Style Checker](pep-8-style-checker)
 
 ## Application Goals
 
@@ -57,6 +58,8 @@ All the options what the player can do in the application is visible on the play
 
 As the application is started blackjack title and "loading..." text appear. The appliaction reachs out the google sheet via gspread, when it is succeed "Welcome!" text appears and we enter the main menu.
 
+![Loading Screen](documentation/loading-screen.PNG)
+
 ### Main Menu
 
 From here the player can
@@ -65,17 +68,25 @@ From here the player can
  - or close the application.
 Also the player can return here from everywhere.
 
+![Main Menu](documentation/main-menu.PNG)
+
 ### Leaderboard
 
 Here shows up the top 10 player by chips.
 
-### Login / Registration
+![Leaderboard](documentation/leaderboard.PNG)
+
+### Login and Registration
 
 The player enter his player name here, if it's already exist than enters to the game. If isn't than he can register it if he decide to do so.
+
+![Registration](documentation/registration.PNG)
 
 ### Game
 
 Game starts with shuffle than the players bet.
+
+![Game](documentation/game.png)
 
 #### Shuffle
 
@@ -134,7 +145,7 @@ The code was written in Python.
  - time
  - google.oauth2.service_account
 
-## Deployment & Local Development
+## Deployment and Local Development
 
 ### Heroku
 
@@ -190,4 +201,6 @@ Manual testing can be found in the [TESTING.md](TESTING.md) file.
 | Some hands had wrong value. | From the card 10 only the "1" was cut out. So it had the value of 1. | "1" is handled now as "J", "Q" and "K" not as a number. |
 | Every card had the value of 10 | Fixing the previus error "1" was used inted of card=="1" in the if statment so it was alway true. | The statement was finished, as it should be. |
 
+### PEP 8 Style Checker
 
+To check and upgrade code style [code:wof](https://www.codewof.co.nz/style/python3/) was used.
